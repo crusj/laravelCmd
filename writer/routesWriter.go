@@ -92,6 +92,19 @@ func (actBody actBody) String() string {
 				actBody.ActionName = "destroy"
 			}
 		}
+	} else {
+		switch strings.ToUpper(actBody.Method.String()) {
+		case "POST":
+			actBody.ActionName = "store" + strcase.UpperCamelCase(actBody.ActionName)
+		case "PUT":
+			if actBody.SetId == true {
+				actBody.ActionName = "update" + strcase.UpperCamelCase(actBody.ActionName)
+			}
+		case "DELETE":
+			if actBody.SetId == true {
+				actBody.ActionName = "destroy" + strcase.UpperCamelCase(actBody.ActionName)
+			}
+		}
 	}
 	tmp := fmt.Sprintf(routeTpl,
 		strings.Repeat(" ", actBody.Indent|8),

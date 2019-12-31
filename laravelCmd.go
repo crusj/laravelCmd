@@ -27,10 +27,29 @@ var (
 	apiRouteEnd   = apiRoute.Flag("e", "route end flag").Default("//route_end").String()
 	apiDocument   = apiRoute.Flag("config", "api document path").Default("api.json").String()
 	apiParser     = apiRoute.Flag("parser", "api parser").Default("yapi").String()
+
+	service         = app.Command("service", "analysis api document and write routes to every service file")
+	serviceDocument = service.Flag("config", "service document path").Default("api.json").String()
+	servicePath     = service.Flag("path", "service path").Default("app/Http/Services/").String()
+	serviceStart    = service.Flag("s", "service start flag").Default("//service_start").String()
+	serviceEnd      = service.Flag("e", "service end flag").Default("//service_end").String()
+	serviceParser   = service.Flag("parser", "api parser").Default("yapi").String()
 )
 
 func main() {
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	//向service文件中写入方法
+	case service.FullCommand():
+		if *serviceParser == "yapi" {
+			routeParser := writer.NewRoutesParser(*serviceDocument)
+			serviceWriter := writer.NewServiceWriter(*servicePath, *serviceStart, *serviceEnd)
+			err := writer.Writes(routeParser, serviceWriter)
+			if err != nil {
+				kingpin.Errorf("%s\n", err)
+			}
+		} else {
+			kingpin.Fatalf("不支持的文档解析器%s,当前仅支持yapi文档\n", *apiParser)
+		}
 	//打印所有路由
 	case adminPrint.FullCommand():
 		laravelAdmin, err := cmd.NewLaravelAdmin(

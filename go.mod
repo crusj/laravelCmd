@@ -1,4 +1,4 @@
-module github.com/crusj/laravelAdminCmd
+module github.com/crusj/laravelCmd
 
 go 1.13
 

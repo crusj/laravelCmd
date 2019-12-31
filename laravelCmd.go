@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/crusj/laravelAdminCmd/cmd"
-	_ "github.com/crusj/laravelAdminCmd/init"
+	"github.com/crusj/laravelCmd/cmd"
+	_ "github.com/crusj/laravelCmd/init"
 	logger "github.com/crusj/logger"
 	"io/ioutil"
 	"os"
@@ -29,7 +29,7 @@ func init() {
 func main() {
 	defer func() {
 		if err := recover(); err != nil {
-			logger.Info("执行操作失败:%v",err)
+			logger.Info("执行操作失败:%v", err)
 		}
 	}()
 

@@ -1,10 +1,12 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/alexeyco/simpletable"
-	myfile "github.com/crusj/file"
+	myFile "github.com/crusj/file"
 	"github.com/crusj/logger"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"regexp"
@@ -22,44 +24,43 @@ func (it b) String() string {
 	}
 }
 
-type MakeConfig struct {
+type Config struct {
 	Name  string `json:"name""`
 	Title string `json:"title"`
 }
-type Make struct {
-	IsSet  bool
-	Value  string
-	Config []MakeConfig
+type laravelAdmin struct {
+	config        []Config
+	routePath     string
+	startFlag     string
+	endFlag       string
+	controllerDir string
 }
 
-func (it *Make) Set(value string) error {
-	it.IsSet = true
-	it.Value = value
-	return nil
-}
-func (it *Make) String() string {
-	return it.Value
-}
-func (it *Make) CheckAndRunMake() {
-	if it.IsSet == true {
-
-		//显示
-		if it.Value == "list" {
-			it.List()
-			return
-		}
-		//执行某一项
-		if number, err := strconv.Atoi(it.Value); err == nil {
-			it.Make(number)
-		}
-		//执行所有项
-		if it.Value == "all" {
-			it.MakeAll()
-		}
-
+func NewLaravelAdmin(config, routePath, controller, startFlag, endFlag string) (*laravelAdmin, error) {
+	var configFile *os.File
+	var err error
+	if configFile, err = os.Open(config); err != nil {
+		return nil, err
 	}
+	laravelAdmin := new(laravelAdmin)
+	laravelAdmin.controllerDir = controller
+	laravelAdmin.startFlag = startFlag
+	laravelAdmin.endFlag = endFlag
+
+	configContent, err := ioutil.ReadAll(configFile)
+	if err != nil {
+		return nil, err
+	}
+	defer configFile.Close()
+	//解析配置文件
+	err = json.Unmarshal(configContent, &laravelAdmin.config)
+	if err != nil {
+		return nil, err
+	}
+	return laravelAdmin, nil
+
 }
-func (it *Make) List() {
+func (laravelAdmin *laravelAdmin) List() {
 	table := simpletable.New()
 	table.Header = &simpletable.Header{
 		Cells: []*simpletable.Cell{
@@ -69,9 +70,9 @@ func (it *Make) List() {
 			{Align: simpletable.AlignLeft, Text: "register"},
 		},
 	}
-	for i, item := range it.Config {
+	for i, item := range laravelAdmin.config {
 		var exists b = true
-		exists = adminRouteIsRegister(item.Name)
+		exists = laravelAdmin.adminRouteIsRegister(item.Name)
 		r := []*simpletable.Cell{
 			{Align: simpletable.AlignLeft, Text: strconv.Itoa(i + 1)},
 			{Align: simpletable.AlignLeft, Text: item.Name},
@@ -85,23 +86,23 @@ func (it *Make) List() {
 }
 
 //是否注册
-func adminRouteIsRegister(serviceName string) b {
-	path := "app/Admin/Controllers/" + serviceName + "Controller.php"
+func (laravelAdmin *laravelAdmin) adminRouteIsRegister(serviceName string) b {
+	path := laravelAdmin.controllerDir + serviceName + "Controller.php"
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return false
 	} else {
 		return true
 	}
 }
-func addAdminRouteStartTag(line int, content string) string {
-	if content == "//路由开始" {
+func (laravelAdmin *laravelAdmin) addAdminRouteStartTag(line int, content string) string {
+	if content == laravelAdmin.startFlag {
 		return "admin_route_start";
 	} else {
 		return "";
 	}
 }
-func addAdminRouteEndTag(line int, content string) string {
-	if content == "//路由结束" {
+func (laravelAdmin *laravelAdmin) addAdminRouteEndTag(line int, content string) string {
+	if content == laravelAdmin.endFlag {
 		return "admin_route_end";
 	} else {
 		return "";
@@ -109,12 +110,12 @@ func addAdminRouteEndTag(line int, content string) string {
 }
 
 //添加一个路由
-func (it *Make) Make(number int) {
-	logger.Debug("\n开始注册序号为%d的路由",number)
-	for i, item := range it.Config {
+func (laravelAdmin *laravelAdmin) Make(number int) {
+	logger.Debug("\n开始注册序号为%d的路由", number)
+	for i, item := range laravelAdmin.config {
 		if i+1 == number {
 			controller := fmt.Sprintf("%sController", item.Name)
-			if adminRouteIsRegister(item.Name) == true {
+			if laravelAdmin.adminRouteIsRegister(item.Name) == true {
 				logger.Error("路由%v已经注册", item.Name)
 				return
 			}
@@ -141,11 +142,11 @@ func (it *Make) Make(number int) {
 					logger.Error("执行失败", string(output))
 				} else {
 					//添加路由
-					f, err := myfile.NewFile("app/Admin/routes.php")
+					f, err := myFile.NewFile("app/Admin/routes.php")
 					if err != nil {
 						logger.Error(err)
 					} else {
-						f.Scan([]myfile.AddTag{addAdminRouteStartTag, addAdminRouteEndTag}...)
+						f.Scan([]myFile.AddTag{laravelAdmin.addAdminRouteStartTag, laravelAdmin.addAdminRouteEndTag}...)
 						err := f.InsertBetween("admin_route_start", "admin_route_end", []string{indentSpace + route})
 						if err != nil {
 							logger.Error("添加路由%s,到Admin/routes.php失败,%s", route, err)
@@ -161,13 +162,13 @@ func (it *Make) Make(number int) {
 }
 
 //添加所有路由
-func (it *Make) MakeAll() {
+func (laravelAdmin *laravelAdmin) MakeAll() {
 
 	logger.Debug("\n开始注册所有路由")
 	contents := make([]string, 0)
 	indentSpace := strings.Repeat(" ", 4)
-	for _, item := range it.Config {
-		if adminRouteIsRegister(item.Name) == true {
+	for _, item := range laravelAdmin.config {
+		if laravelAdmin.adminRouteIsRegister(item.Name) == true {
 			logger.Error("路由%v已经注册，将被忽略", item.Name)
 			continue
 		}
@@ -195,12 +196,12 @@ func (it *Make) MakeAll() {
 		}
 	}
 	if len(contents) > 0 {
-		f, err := myfile.NewFile("app/Admin/routes.php")
+		f, err := myFile.NewFile("app/Admin/routes.php")
 		if err != nil {
 			logger.Error(err)
 			return
 		}
-		f.Scan([]myfile.AddTag{addAdminRouteEndTag, addAdminRouteStartTag}...)
+		f.Scan([]myFile.AddTag{laravelAdmin.addAdminRouteEndTag, laravelAdmin.addAdminRouteStartTag}...)
 		err = f.InsertBetween("admin_route_start", "admin_route_end", contents)
 		if err != nil {
 			logger.Error(err)

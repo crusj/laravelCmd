@@ -1,8 +1,6 @@
-{
-  "make": [
-    {
-      "name": "Service",
-      "title": "产品与服务"
-    }
-  ]
-}
+[
+  {
+    "name": "Service",
+    "title": "产品与服务"
+  }
+]

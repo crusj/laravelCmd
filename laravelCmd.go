@@ -1,63 +1,90 @@
 package main
 
 import (
-	"encoding/json"
-	"flag"
 	"github.com/crusj/laravelCmd/cmd"
 	_ "github.com/crusj/laravelCmd/init"
-	logger "github.com/crusj/logger"
-	"io/ioutil"
+	"github.com/crusj/laravelCmd/writer"
+	"gopkg.in/alecthomas/kingpin.v2"
 	"os"
 )
 
 var (
-	path   string
-	make   cmd.Make = cmd.Make{}
-	config Config
+	app                 = kingpin.New("laravelcmd", "laravel cmd tools")
+	admin               = app.Command("admin", "laravel admin tool")
+	adminConfig         = admin.Flag("config", "config file path").Default("admin.json").String()
+	adminRoutePath      = admin.Flag("path", "route file path").Default("app/Admin/routes.php").String()
+	adminControllerPath = admin.Flag("c", "controller dir").Default("app/Admin/Controllers/").String()
+	adminRouteStart     = admin.Flag("s", "route start flag").Default("//route_start").String()
+	adminRouteEnd       = admin.Flag("e", "route end flag").Default("//route_end").String()
+	adminNumber         = admin.Command("number", "write route of number")
+	adminNu             = adminNumber.Arg("number", "route table number").Required().Int()
+	adminAll            = admin.Command("all", " write all routes")
+	adminPrint          = admin.Command("list", "list route table")
+
+	apiRoute      = app.Command("route", "analysis api document and write routes to api route file")
+	apiRoutePath  = apiRoute.Flag("path", "api route file path").Default("routes/api.php").String()
+	apiRouteStart = apiRoute.Flag("s", "route start flag").Default("//route_start").String()
+	apiRouteEnd   = apiRoute.Flag("e", "route end flag").Default("//route_end").String()
+	apiDocument   = apiRoute.Flag("config", "api document path").Default("api.json").String()
+	apiParser     = apiRoute.Flag("parser", "api parser").Default("yapi").String()
 )
 
-type Config struct {
-	Make []cmd.MakeConfig `json:"make"`
-}
-
-func init() {
-	flag.StringVar(&path, "path", "cmd.json", "配置文件路径")
-	flag.Var(&make, "make", "php artisan admin:make")
-	flag.Parse()
-}
-
 func main() {
-	defer func() {
-		if err := recover(); err != nil {
-			logger.Info("执行操作失败:%v", err)
+	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	//打印所有路由
+	case adminPrint.FullCommand():
+		laravelAdmin, err := cmd.NewLaravelAdmin(
+			*adminConfig,
+			*adminRoutePath,
+			*adminControllerPath,
+			*adminRouteStart,
+			*adminRouteEnd,
+		)
+		if err != nil {
+			kingpin.Errorf("%s\n", err)
+		} else {
+			laravelAdmin.List()
 		}
-	}()
+	//生成指定序号路由
+	case adminNumber.FullCommand():
+		laravelAdmin, err := cmd.NewLaravelAdmin(
+			*adminConfig,
+			*adminRoutePath,
+			*adminControllerPath,
+			*adminRouteStart,
+			*adminRouteEnd,
+		)
+		if err != nil {
+			kingpin.Errorf("%s\n", err)
+		} else {
+			laravelAdmin.Make(*adminNu)
+		}
+	//生成指定序号路由
+	case adminAll.FullCommand():
+		laravelAdmin, err := cmd.NewLaravelAdmin(
+			*adminConfig,
+			*adminRoutePath,
+			*adminControllerPath,
+			*adminRouteStart,
+			*adminRouteEnd,
+		)
+		if err != nil {
+			kingpin.Errorf("%s\n", err)
+		} else {
+			laravelAdmin.MakeAll()
+		}
 
-	if path == "" {
-		path = "cmd.json"
-	}
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		logger.Painc("配置文件%v,不存在", path)
-	}
-	if err := parseConfig(); err != nil {
-		logger.Painc("解析配置文件%v失败,%v", path, err)
-	}
-
-	//make命令
-	make.Config = config.Make
-	make.CheckAndRunMake()
-
-}
-func parseConfig() error {
-	if file, err := os.Open(path); err != nil {
-		logger.Warn("无法打开配置文件%v,", err)
-		return err
-	} else {
-		fileData, _ := ioutil.ReadAll(file)
-		if err := json.Unmarshal(fileData, &config); err != nil {
-			logger.Warn("读取配置文件%v失败,", path, err)
-			return err
+	//api路由文件生成工具
+	case apiRoute.FullCommand():
+		if *apiParser == "yapi" {
+			routeParser := writer.NewRoutesParser(*apiDocument)
+			routeWriter := writer.NewRoutesWriter(*apiRoutePath, *apiRouteStart, *apiRouteEnd)
+			err := writer.Write(routeParser, routeWriter)
+			if err != nil {
+				kingpin.Errorf("%s\n", err)
+			}
+		} else {
+			kingpin.Fatalf("不支持的文档解析器%s,当前仅支持yapi文档\n", *apiParser)
 		}
 	}
-	return nil
 }

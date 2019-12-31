@@ -1,0 +1,194 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+//不强校验token
+Route::middleware(['jmhc.check.token:false'])->group(function () {
+    Route::prefix("user")->group(function () {
+        Route::post("login", 'User@login');
+    });
+    Route::get("notice", "Notice@index");
+    Route::get("notice/{id}", "Notice@show");
+    Route::get('banner', 'Banner@index');
+
+    Route::prefix('service')->group(function () {
+        Route::get('category', 'ServiceCategory@index');
+    });
+
+});
+//强校验token
+Route::middleware(['jmhc.check.token'])->group(function () {
+    Route::prefix("user")->group(function () {
+        Route::post('updateTel', 'User@updateTel');
+    });
+//route开始
+    //新闻
+    Route::prefix('news-type')->group(function(){
+        //分类和标签
+        Route::get('/news-type','NewsType@index');
+    })
+    //产品服务
+    Route::prefix('service-order')->group(function(){
+        //预约记录
+        Route::get('/service-order','ServiceOrder@index');
+    })
+    //新闻
+    Route::prefix('news')->group(function(){
+        //新闻列表
+        Route::get('/news','News@index');
+        //新闻详情
+        Route::get('/news/{id}','News@show');
+        //新闻评论
+        Route::get('/news/{id}/comment','News@comment');
+        //评论新闻
+        Route::post('/news/{id}/comment','News@comment');
+        //预约咨询
+        Route::post('/news/{id}/order','News@order');
+        //收藏
+        Route::post('/news/{id}/collect','News@collect');
+        //点赞
+        Route::post('/news/{id}/thumb','News@thumb');
+        //点赞
+        Route::post('/news_video/{id}/thumb','NewsVideo@thumb');
+    })
+    //新闻视频
+    Route::prefix('video')->group(function(){
+        //视频列表
+        Route::get('/video','Video@index');
+        //视频详情
+        Route::get('/video/{id}','Video@show');
+        //视频评论
+        Route::get('/video/{id}/comment','Video@comment');
+        //评论视频
+        Route::post('/video/{id}/comment','Video@comment');
+    })
+    //活动
+    Route::prefix('activity')->group(function(){
+        //收藏
+        Route::post('/activity/{id}/collect','Activity@collect');
+        //活动列表
+        Route::get('/activity','Activity@index');
+        //活动详情
+        Route::get('/activity/{id}','Activity@show');
+        //立即报名
+        Route::post('/activity/{id}/join','Activity@join');
+        //预约咨询
+        Route::post('/activity/{id}/order','Activity@order');
+    })
+    //个人中心
+    Route::prefix('file')->group(function(){
+        //文件上传
+        Route::post('/file','File@store');
+    })
+    //个人中心
+    Route::prefix('agreement')->group(function(){
+        //用户协议
+        Route::get('/agreement','Agreement@index');
+    })
+    //产品服务
+    Route::prefix('service')->group(function(){
+        //服务分类
+        Route::get('/service/category','Service@index');
+        //所有服务
+        Route::get('/service/all','Service@index');
+        //服务详情
+        Route::get('/service/{id}','Service@show');
+        //服务评论
+        Route::get('/service/{id}/comment','Service@comment');
+        //评论服务
+        Route::post('/service/{id}/comment','Service@comment');
+        //预约咨询
+        Route::post('/service/{id}/order','Service@order');
+        //收藏
+        Route::post('/service/{id}/collect','Service@collect');
+    })
+    //平台公告
+    Route::prefix('notice')->group(function(){
+        //列表
+        Route::get('/notice','Notice@index');
+        //详情
+        Route::get('/notice/{id}','Notice@show');
+    })
+    //中介服务
+    Route::prefix('middle')->group(function(){
+        //中介列表
+        Route::get('/middle','Middle@index');
+        //中介详情
+        Route::get('/middle/{id}','Middle@show');
+        //申请联系方式
+        Route::post('/middle/{id}/tel','Middle@tel');
+        //评论中介
+        Route::post('/middle/{id}/comment','Middle@comment');
+        //收藏
+        Route::post('/middle/{id}/collect','Middle@collect');
+        //点赞
+        Route::post('/middle/{id}/thumb','Middle@thumb');
+    })
+    //个人中心
+    Route::prefix('privacy')->group(function(){
+        //隐私政策
+        Route::get('/privacy','Privacy@index');
+    })
+    //个人中心
+    Route::prefix('user-info')->group(function(){
+        //个人信息
+        Route::get('/user-info','UserInfo@index');
+    })
+    //Banner
+    Route::prefix('banner')->group(function(){
+        //列表
+        Route::get('/banner','Banner@index');
+    })
+    //中介服务
+    Route::prefix('midlle')->group(function(){
+        //预约咨询
+        Route::post('/midlle/{id}/order','Midlle@order');
+    })
+    //个人中心
+    Route::prefix('user')->group(function(){
+        //授权登录
+        Route::post('/user/login','User@store');
+        //更新手机号
+        Route::post('/user/updateTel','User@store');
+        //信息更改
+        Route::put('/user_info','UserInfo@');
+    })
+    //个人中心
+    Route::prefix('code')->group(function(){
+        //获取验证码
+        Route::get('/code','Code@index');
+    })
+    //个人中心
+    Route::prefix('code-verify')->group(function(){
+        //验证手机
+        Route::post('/code-verify','CodeVerify@store');
+    })
+    //个人中心
+    Route::prefix('feedback')->group(function(){
+        //反馈与帮助
+        Route::post('/feedback','Feedback@store');
+    })
+    //产品服务
+    Route::prefix('service-collect')->group(function(){
+        //收藏记录
+        Route::get('/service-collect','ServiceCollect@index');
+    })
+//route结束
+});
+

@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	app                 = kingpin.New("laravelcmd", "laravel cmd tools")
+	app                 = kingpin.New("laravelCmd", "laravel cmd tools")
 	admin               = app.Command("admin", "laravel admin tool")
 	adminConfig         = admin.Flag("config", "config file path").Default("admin.json").String()
 	adminRoutePath      = admin.Flag("path", "route file path").Default("app/Admin/routes.php").String()
@@ -34,10 +34,29 @@ var (
 	serviceStart    = service.Flag("s", "service start flag").Default("//service_start").String()
 	serviceEnd      = service.Flag("e", "service end flag").Default("//service_end").String()
 	serviceParser   = service.Flag("parser", "api parser").Default("yapi").String()
+
+	controller         = app.Command("controller", "analysis api document and write routes to every controller file")
+	controllerDocument = controller.Flag("config", "controller document path").Default("api.json").String()
+	controllerPath     = controller.Flag("path", "controller path").Default("app/Http/Services/").String()
+	controllerStart    = controller.Flag("s", "controller start flag").Default("//controller_start").String()
+	controllerEnd      = controller.Flag("e", "controller end flag").Default("//controller_end").String()
+	controllerParser   = controller.Flag("parser", "api parser").Default("yapi").String()
 )
 
 func main() {
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	//向controller写入方法
+	case controller.FullCommand():
+		if *controllerParser == "yapi" {
+			routeParser := writer.NewRoutesParser(*controllerDocument)
+			controllerWriter := writer.NewServiceWriter(*controllerPath, *controllerStart, *controllerEnd)
+			err := writer.Writes(routeParser, controllerWriter)
+			if err != nil {
+				kingpin.Errorf("%s\n", err)
+			}
+		} else {
+			kingpin.Fatalf("不支持的文档解析器%s,当前仅支持yapi文档\n", *apiParser)
+		}
 	//向service文件中写入方法
 	case service.FullCommand():
 		if *serviceParser == "yapi" {

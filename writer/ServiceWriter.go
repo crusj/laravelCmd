@@ -72,9 +72,12 @@ func (serviceWriter serviceWriter) Contents(routes []Route) [][]string {
 		returnType := ""
 		defaultReturnValue := ""
 		switch strings.ToUpper(route.Method.String()) {
-		case "GET", "POST":
+		case "GET":
 			returnType = "array"
 			defaultReturnValue = "[]"
+		case "POST":
+			returnType = "int"
+			defaultReturnValue = "0"
 		case "PUT", "DELETE":
 			returnType = "bool"
 			defaultReturnValue = "false"

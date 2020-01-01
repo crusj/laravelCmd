@@ -8,6 +8,8 @@ github.com/crusj/file v0.0.0-20191229094543-e496738788c0 h1:QKWGFBapsn/aUU/3IlrS
 github.com/crusj/file v0.0.0-20191229094543-e496738788c0/go.mod h1:MBHEbaxmdmh/BAF7574ge+pTap3IrJ8jL9fIKFTpLM8=
 github.com/crusj/logger v1.2.0 h1:JTHxmgvb/jBKya+VyjI8O4b1Gb2yiQGIG0WJPTVwAsk=
 github.com/crusj/logger v1.2.0/go.mod h1:5eNU8lk9XbdT5Q/KJeWRnGKZMm6oBC9Pfi5tRODfke0=
+github.com/crusj/logger v1.2.1 h1:0dkDCm0u3EdRzkxc8OxF9Tk/9u2LcPv9ki0pyvBcjDU=
+github.com/crusj/logger v1.2.1/go.mod h1:5eNU8lk9XbdT5Q/KJeWRnGKZMm6oBC9Pfi5tRODfke0=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

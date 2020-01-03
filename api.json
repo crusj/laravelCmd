@@ -29,13 +29,13 @@
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577416645,
-        "up_time": 1577425010,
+        "up_time": 1577930384,
         "req_query": [
           {
             "required": "1",
-            "_id": "5e05987256a03f4354cd63f6",
+            "_id": "5e0d4e9056a03f4354cd6579",
             "name": "type",
-            "desc": "主页:index,新闻:news,服务:service,活动:activity"
+            "desc": "string|主页:index,新闻:news,服务:service,活动:activity"
           }
         ],
         "req_headers": [],
@@ -77,20 +77,20 @@
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577425441,
-        "up_time": 1577690392,
+        "up_time": 1577930532,
         "req_query": [
           {
             "required": "0",
-            "_id": "5e09a51856a03f4354cd6576",
+            "_id": "5e0d4f2456a03f4354cd657b",
             "name": "page",
-            "desc": ""
+            "desc": "int|1|请求页码"
           },
           {
             "required": "0",
-            "_id": "5e09a51856a03f4354cd6575",
+            "_id": "5e0d4f2456a03f4354cd657a",
             "name": "per_page",
             "example": "",
-            "desc": ""
+            "desc": "int|10|请求每页条数"
           }
         ],
         "req_headers": [],
@@ -149,7 +149,7 @@
     "list": [
       {
         "query_path": {
-          "path": "/service/category",
+          "path": "/service_category",
           "params": []
         },
         "edit_uid": 0,
@@ -164,13 +164,13 @@
         "method": "GET",
         "catid": 830,
         "title": "服务分类",
-        "path": "/service/category",
+        "path": "/service_category",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577427548,
-        "up_time": 1577693048,
+        "up_time": 1577930636,
         "req_query": [],
         "req_headers": [],
         "req_body_form": [],
@@ -181,7 +181,7 @@
       },
       {
         "query_path": {
-          "path": "/service/all",
+          "path": "/service_category/allService",
           "params": []
         },
         "edit_uid": 0,
@@ -196,13 +196,13 @@
         "method": "GET",
         "catid": 830,
         "title": "所有服务",
-        "path": "/service/all",
+        "path": "/service_category/allService",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577428348,
-        "up_time": 1577693431,
+        "up_time": 1577930670,
         "req_query": [],
         "req_headers": [],
         "req_body_form": [],
@@ -251,7 +251,7 @@
       },
       {
         "query_path": {
-          "path": "/service/{id}/comment",
+          "path": "/service/{id}/comments",
           "params": []
         },
         "edit_uid": 0,
@@ -266,11 +266,11 @@
         "method": "GET",
         "catid": 830,
         "title": "服务评论",
-        "path": "/service/{id}/comment",
+        "path": "/service/{id}/comments",
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e06cf8756a03f4354cd6559",
+            "_id": "5e0d4fc756a03f4354cd657c",
             "name": "id",
             "desc": ""
           }
@@ -279,13 +279,13 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "5e06cf8756a03f4354cd655b",
+            "_id": "5e0d4fc756a03f4354cd657e",
             "name": "page",
             "desc": ""
           },
           {
             "required": "0",
-            "_id": "5e06cf8756a03f4354cd655a",
+            "_id": "5e0d4fc756a03f4354cd657d",
             "name": "per_page",
             "example": "",
             "desc": ""
@@ -298,7 +298,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"total_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"current_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"per_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"},\"description\":\"评论id\"},\"user_id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"},\"description\":\"用户id\"},\"avatar\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([\\\"五天前\\\",\\\"一小时前\\\",\\\"现在\\\"])\"}},\"nickname\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}},\"content\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}},\"created_at\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([\\\"五天前\\\",\\\"一小时前\\\",\\\"现在\\\"])\"},\"description\":\"发布时间\"}},\"required\":[\"id\",\"content\",\"nickname\",\"created_at\",\"user_id\"]}},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"count\",\"total_page\",\"current_page\",\"per_page\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577432274,
-        "up_time": 1577504647,
+        "up_time": 1577930695,
         "__v": 0
       },
       {
@@ -369,7 +369,7 @@
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05d88d56a03f4354cd654d",
+            "_id": "5e0d500856a03f4354cd6581",
             "name": "id",
             "desc": "服务id"
           }
@@ -377,12 +377,12 @@
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577429432,
-        "up_time": 1577441421,
+        "up_time": 1577930760,
         "req_query": [],
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05d88d56a03f4354cd654e",
+            "_id": "5e0d500856a03f4354cd6582",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -391,7 +391,7 @@
         "__v": 0,
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"tel\":{\"type\":\"string\",\"mock\":{\"mock\":\"1838046@integer(1000,9999)\"},\"description\":\"手机号\"},\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"验证码\"}},\"required\":[\"tel\",\"code\"]}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"tel\":{\"type\":\"string\",\"mock\":{\"mock\":\"1838046@integer(1000,9999)\"},\"description\":\"手机号\"},\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"4,|验证码\"}},\"required\":[\"tel\",\"code\"]}",
         "req_body_type": "json",
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}"
       },
@@ -444,7 +444,7 @@
       },
       {
         "query_path": {
-          "path": "/service-order",
+          "path": "/service_order",
           "params": []
         },
         "edit_uid": 0,
@@ -459,13 +459,13 @@
         "method": "GET",
         "catid": 830,
         "title": "预约记录",
-        "path": "/service-order",
+        "path": "/service_order",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577437207,
-        "up_time": 1577438204,
+        "up_time": 1577930781,
         "req_query": [],
         "req_headers": [],
         "req_body_form": [],
@@ -476,7 +476,7 @@
       },
       {
         "query_path": {
-          "path": "/service-collect",
+          "path": "/service_collect",
           "params": []
         },
         "edit_uid": 0,
@@ -491,7 +491,7 @@
         "method": "GET",
         "catid": 830,
         "title": "收藏记录",
-        "path": "/service-collect",
+        "path": "/service_collect",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
@@ -503,7 +503,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"total_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"current_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"per_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"}},\"title\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([\\\"五天前\\\",\\\"一小时前\\\",\\\"现在\\\"])\"},\"description\":\"发布时间\"},\"image\":{\"type\":\"string\",\"mock\":{\"mock\":\"@url\"},\"description\":\"图片\"},\"tags\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}},\"description\":\"标签\"},\"scan_count\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"浏览数量\"},\"collect_count\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"收藏数量\"},\"thumb_count\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"点赞数量\"},\"is_collect\":{\"type\":\"boolean\",\"mock\":{\"mock\":\"@boolean\"},\"description\":\"是否收藏\"},\"is_thumb\":{\"type\":\"boolean\",\"mock\":{\"mock\":\"@boolean\"},\"description\":\"是否点赞\"}},\"required\":[\"id\",\"is_collect\",\"thumb_count\",\"collect_count\",\"scan_count\",\"tags\",\"image\",\"is_thumb\"]}},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"count\",\"total_page\",\"current_page\",\"per_page\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577437804,
-        "up_time": 1577438205,
+        "up_time": 1577930793,
         "__v": 0
       }
     ]
@@ -517,7 +517,7 @@
     "list": [
       {
         "query_path": {
-          "path": "/news-type",
+          "path": "/news/tagsAndTypes",
           "params": []
         },
         "edit_uid": 0,
@@ -532,13 +532,13 @@
         "method": "GET",
         "catid": 839,
         "title": "分类和标签",
-        "path": "/news-type",
+        "path": "/news/tagsAndTypes",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577430272,
-        "up_time": 1577438139,
+        "up_time": 1577930885,
         "req_query": [],
         "req_headers": [],
         "req_body_form": [],
@@ -675,7 +675,7 @@
       },
       {
         "query_path": {
-          "path": "/news/{id}/comment",
+          "path": "/news/{id}/comments",
           "params": []
         },
         "edit_uid": 0,
@@ -690,11 +690,11 @@
         "method": "GET",
         "catid": 839,
         "title": "新闻评论",
-        "path": "/news/{id}/comment",
+        "path": "/news/{id}/comments",
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05b92e56a03f4354cd649e",
+            "_id": "5e0d50a456a03f4354cd6583",
             "name": "id",
             "desc": ""
           }
@@ -702,17 +702,17 @@
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577431999,
-        "up_time": 1577438183,
+        "up_time": 1577930916,
         "req_query": [
           {
             "required": "0",
-            "_id": "5e05b92e56a03f4354cd64a0",
+            "_id": "5e0d50a456a03f4354cd6585",
             "name": "page",
             "desc": ""
           },
           {
             "required": "0",
-            "_id": "5e05b92e56a03f4354cd649f",
+            "_id": "5e0d50a456a03f4354cd6584",
             "name": "per_page",
             "example": "",
             "desc": ""
@@ -746,7 +746,7 @@
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05b61656a03f4354cd646b",
+            "_id": "5e0d50f956a03f4354cd6588",
             "name": "id",
             "desc": ""
           }
@@ -756,7 +756,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05b61656a03f4354cd646c",
+            "_id": "5e0d50f956a03f4354cd6589",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -764,12 +764,12 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"content\":{\"type\":\"string\",\"description\":\"内容\",\"mock\":{\"mock\":\"@string\"}},\"comment_id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"评论id,二级评论\"}},\"required\":[\"content\",\"comment_id\"]}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"content\":{\"type\":\"string\",\"description\":\"string|内容\",\"mock\":{\"mock\":\"@string\"}},\"comment_id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"评论id,二级评论\"}},\"required\":[\"content\",\"comment_id\"]}",
         "req_body_type": "json",
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577432526,
-        "up_time": 1577438191,
+        "up_time": 1577931001,
         "__v": 0
       },
       {
@@ -793,7 +793,7 @@
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05d87b56a03f4354cd654b",
+            "_id": "5e0d510d56a03f4354cd658a",
             "name": "id",
             "desc": "服务id"
           }
@@ -803,7 +803,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05d87b56a03f4354cd654c",
+            "_id": "5e0d510d56a03f4354cd658b",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -811,12 +811,12 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"tel\":{\"type\":\"string\",\"mock\":{\"mock\":\"1838046@integer(1000,9999)\"},\"description\":\"手机号\"},\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"验证码\"}},\"required\":[\"tel\",\"code\"]}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"tel\":{\"type\":\"string\",\"mock\":{\"mock\":\"1838046@integer(1000,9999)\"},\"description\":\"手机号\"},\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"4,|验证码\"}},\"required\":[\"tel\",\"code\"]}",
         "req_body_type": "json",
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577432721,
-        "up_time": 1577441403,
+        "up_time": 1577931021,
         "__v": 0
       },
       {
@@ -946,30 +946,30 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "5e05c52156a03f4354cd64e8",
+            "_id": "5e0d517d56a03f4354cd658f",
             "name": "page",
-            "desc": ""
+            "desc": "int|1|请求页码"
           },
           {
             "required": "0",
-            "_id": "5e05c52156a03f4354cd64e7",
+            "_id": "5e0d517d56a03f4354cd658e",
             "name": "per_page",
             "example": "",
-            "desc": ""
+            "desc": "int|10|每页大小"
           },
           {
             "required": "0",
-            "_id": "5e05c52156a03f4354cd64e6",
+            "_id": "5e0d517d56a03f4354cd658d",
             "name": "key",
             "example": "",
-            "desc": "关键字"
+            "desc": "string|关键字"
           },
           {
             "required": "0",
-            "_id": "5e05c52156a03f4354cd64e5",
+            "_id": "5e0d517d56a03f4354cd658c",
             "name": "is_recommend",
             "example": "",
-            "desc": "0-所有,1-视频推荐"
+            "desc": "int|0|0-所有,1-视频推荐"
           }
         ],
         "req_headers": [],
@@ -979,7 +979,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"total_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"current_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"per_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"}},\"title\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"标题\"},\"image\":{\"type\":\"string\",\"mock\":{\"mock\":\"@url\"},\"description\":\"图片\"},\"comment_count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"评论数量\"},\"thumb_count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"点赞数量\"},\"is_thumb\":{\"type\":\"boolean\",\"mock\":{\"mock\":\"@boolean\"},\"description\":\"是否点赞\"}},\"required\":[\"id\",\"image\",\"title\",\"comment_count\",\"is_thumb\",\"thumb_count\"]}},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"count\",\"total_page\",\"current_page\",\"per_page\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577432988,
-        "up_time": 1577438140,
+        "up_time": 1577931133,
         "__v": 0
       },
       {
@@ -1022,7 +1022,7 @@
       },
       {
         "query_path": {
-          "path": "/video/{id}/comment",
+          "path": "/video/{id}/comments",
           "params": []
         },
         "edit_uid": 0,
@@ -1037,11 +1037,11 @@
         "method": "GET",
         "catid": 848,
         "title": "视频评论",
-        "path": "/video/{id}/comment",
+        "path": "/video/{id}/comments",
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05b91b56a03f4354cd649b",
+            "_id": "5e0d51c556a03f4354cd6593",
             "name": "id",
             "desc": ""
           }
@@ -1050,16 +1050,16 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "5e05b91b56a03f4354cd649d",
+            "_id": "5e0d51c556a03f4354cd6595",
             "name": "page",
-            "desc": ""
+            "desc": "int|1|请求页码"
           },
           {
             "required": "0",
-            "_id": "5e05b91b56a03f4354cd649c",
+            "_id": "5e0d51c556a03f4354cd6594",
             "name": "per_page",
             "example": "",
-            "desc": ""
+            "desc": "int|10|每页大小"
           }
         ],
         "req_headers": [],
@@ -1069,7 +1069,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"total_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"current_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"per_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"},\"description\":\"评论id\"},\"user_id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"},\"description\":\"用户id\"},\"avatar\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([\\\"五天前\\\",\\\"一小时前\\\",\\\"现在\\\"])\"}},\"nickname\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}},\"content\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}},\"created_at\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([\\\"五天前\\\",\\\"一小时前\\\",\\\"现在\\\"])\"},\"description\":\"发布时间\"}},\"required\":[\"id\",\"content\",\"nickname\",\"created_at\",\"user_id\"]}},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"count\",\"total_page\",\"current_page\",\"per_page\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577433154,
-        "up_time": 1577438180,
+        "up_time": 1577931205,
         "__v": 0
       },
       {
@@ -1093,7 +1093,7 @@
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05b87756a03f4354cd6496",
+            "_id": "5e0d51e256a03f4354cd6596",
             "name": "id",
             "desc": ""
           }
@@ -1103,7 +1103,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05b87756a03f4354cd6497",
+            "_id": "5e0d51e256a03f4354cd6597",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1111,17 +1111,17 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"content\":{\"type\":\"string\",\"description\":\"内容\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"content\"]}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"content\":{\"type\":\"string\",\"description\":\",500|评论内容\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"content\"]}",
         "req_body_type": "json",
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577433184,
-        "up_time": 1577438187,
+        "up_time": 1577931234,
         "__v": 0
       },
       {
         "query_path": {
-          "path": "/news_video/{id}/thumb",
+          "path": "/video/{id}/thumb",
           "params": []
         },
         "edit_uid": 0,
@@ -1136,11 +1136,11 @@
         "method": "POST",
         "catid": 848,
         "title": "点赞",
-        "path": "/news_video/{id}/thumb",
+        "path": "/video/{id}/thumb",
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e06ea6556a03f4354cd6561",
+            "_id": "5e0d51f856a03f4354cd6598",
             "name": "id",
             "desc": "新闻视频id"
           }
@@ -1150,7 +1150,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e06ea6556a03f4354cd6562",
+            "_id": "5e0d51f856a03f4354cd6599",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1163,7 +1163,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577511503,
-        "up_time": 1577511525,
+        "up_time": 1577931256,
         "__v": 0
       }
     ]
@@ -1199,37 +1199,37 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "5e05c9c256a03f4354cd650d",
+            "_id": "5e0d523b56a03f4354cd659e",
             "name": "page",
-            "desc": ""
+            "desc": "int|1|请求页码"
           },
           {
             "required": "0",
-            "_id": "5e05c9c256a03f4354cd650c",
+            "_id": "5e0d523b56a03f4354cd659d",
             "name": "per_page",
             "example": "",
-            "desc": ""
+            "desc": "int|10|每页大小"
           },
           {
             "required": "0",
-            "_id": "5e05c9c256a03f4354cd650b",
+            "_id": "5e0d523b56a03f4354cd659c",
             "name": "is_recommend",
             "example": "",
-            "desc": "0-所有,1-是否推荐"
+            "desc": "int|0|0-所有,1-是否推荐"
           },
           {
             "required": "0",
-            "_id": "5e05c9c256a03f4354cd650a",
+            "_id": "5e0d523b56a03f4354cd659b",
             "name": "is_order",
             "example": "",
-            "desc": "0-所有,1-已预约咨询"
+            "desc": "int|0|0-所有,1-已预约咨询"
           },
           {
             "required": "0",
-            "_id": "5e05c9c256a03f4354cd6509",
+            "_id": "5e0d523b56a03f4354cd659a",
             "name": "is_collect",
             "example": "",
-            "desc": "0-所有,1-已收藏"
+            "desc": "int|0|0-所有,1-已收藏"
           }
         ],
         "req_headers": [],
@@ -1239,7 +1239,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"string\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"total_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"current_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"per_page\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@id\"}},\"title\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"标题\"},\"image\":{\"type\":\"string\",\"mock\":{\"mock\":\"@url\"},\"description\":\"图片\"},\"thumb_count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"点赞数量\"},\"collect_count\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"收藏数量\"},\"is_thumb\":{\"type\":\"boolean\",\"mock\":{\"mock\":\"@boolean\"},\"description\":\"是否点赞\"},\"is_collect\":{\"type\":\"boolean\",\"mock\":{\"mock\":\"@boolean\"},\"description\":\"是否收藏\"}},\"required\":[\"id\",\"image\",\"title\",\"collect_count\",\"thumb_count\",\"is_thumb\",\"is_collect\"]}},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"count\",\"total_page\",\"current_page\",\"per_page\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577433450,
-        "up_time": 1577438142,
+        "up_time": 1577931323,
         "__v": 0
       },
       {
@@ -1282,7 +1282,7 @@
       },
       {
         "query_path": {
-          "path": "/middle/{id}/tel",
+          "path": "/middle/{id}/applyTel",
           "params": []
         },
         "edit_uid": 0,
@@ -1297,11 +1297,11 @@
         "method": "POST",
         "catid": 857,
         "title": "申请联系方式",
-        "path": "/middle/{id}/tel",
+        "path": "/middle/{id}/applyTel",
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05bb3c56a03f4354cd64b3",
+            "_id": "5e0d525656a03f4354cd659f",
             "name": "id",
             "desc": "中介id"
           }
@@ -1311,7 +1311,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05bb3c56a03f4354cd64b4",
+            "_id": "5e0d525656a03f4354cd65a0",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1324,7 +1324,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577433858,
-        "up_time": 1577438181,
+        "up_time": 1577931350,
         "__v": 0
       },
       {
@@ -1348,7 +1348,7 @@
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05bb5b56a03f4354cd64b7",
+            "_id": "5e0d527a56a03f4354cd65a1",
             "name": "id",
             "desc": ""
           }
@@ -1358,7 +1358,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05bb5b56a03f4354cd64b8",
+            "_id": "5e0d527a56a03f4354cd65a2",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1371,12 +1371,12 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577433924,
-        "up_time": 1577438188,
+        "up_time": 1577931386,
         "__v": 0
       },
       {
         "query_path": {
-          "path": "/midlle/{id}/order",
+          "path": "/middle/{id}/order",
           "params": []
         },
         "edit_uid": 0,
@@ -1391,11 +1391,11 @@
         "method": "POST",
         "catid": 857,
         "title": "预约咨询",
-        "path": "/midlle/{id}/order",
+        "path": "/middle/{id}/order",
         "project_id": 71,
         "req_params": [
           {
-            "_id": "5e05d86356a03f4354cd6549",
+            "_id": "5e0d5bea56a03f4354cd65b6",
             "name": "id",
             "desc": "中介id"
           }
@@ -1405,7 +1405,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05d86356a03f4354cd654a",
+            "_id": "5e0d5bea56a03f4354cd65b7",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1418,7 +1418,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577437979,
-        "up_time": 1577441379,
+        "up_time": 1577933802,
         "__v": 0
       },
       {
@@ -1595,44 +1595,44 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "5e09967856a03f4354cd6570",
+            "_id": "5e0d52b256a03f4354cd65ae",
             "name": "page",
-            "desc": ""
+            "desc": "int|1|请求页码"
           },
           {
             "required": "0",
-            "_id": "5e09967856a03f4354cd656f",
+            "_id": "5e0d52b256a03f4354cd65ad",
             "name": "per_page",
             "example": "",
-            "desc": ""
+            "desc": "int|10|每页大小"
           },
           {
             "required": "0",
-            "_id": "5e09967856a03f4354cd656e",
+            "_id": "5e0d52b256a03f4354cd65ac",
             "name": "is_join",
             "example": "",
-            "desc": "是否已报名,1是   0-全部活动"
+            "desc": "int|0|是否已报名,1是   0-全部活动"
           },
           {
             "required": "0",
-            "_id": "5e09967856a03f4354cd656d",
+            "_id": "5e0d52b256a03f4354cd65ab",
             "name": "is_recommend",
             "example": "",
-            "desc": "0-所有,1-热门活动"
+            "desc": "int|0|0-所有,1-热门活动"
           },
           {
             "required": "0",
-            "_id": "5e09967856a03f4354cd656c",
+            "_id": "5e0d52b256a03f4354cd65aa",
             "name": "is_collect",
             "example": "",
-            "desc": "0-所有,1-已收藏"
+            "desc": "int|0|0-所有,1-已收藏"
           },
           {
             "required": "0",
-            "_id": "5e09967856a03f4354cd656b",
+            "_id": "5e0d52b256a03f4354cd65a9",
             "name": "is_order",
             "example": "",
-            "desc": "0-所有,1-已预约咨询"
+            "desc": "int|0|0-所有,1-已预约咨询"
           }
         ],
         "req_headers": [],
@@ -1642,7 +1642,7 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"id\"},\"publisher\":{\"type\":\"string\",\"mock\":{\"mock\":\"@name\"},\"description\":\"发布者\"},\"image\":{\"type\":\"string\",\"mock\":{\"mock\":\"@url\"},\"description\":\"图片\"},\"title\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"标题\"},\"scan_count\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"浏览数量\"},\"collect_count\":{\"type\":\"integer\",\"mock\":{\"mock\":\"@integer\"},\"description\":\"收藏数量\"},\"is_sign\":{\"type\":\"boolean\",\"description\":\"是否签到\",\"mock\":{\"mock\":\"@boolean\"}},\"is_join\":{\"type\":\"boolean\",\"mock\":{\"mock\":\"@boolean\"},\"description\":\"是否报名\"},\"state\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([0,1,2])\"},\"description\":\"活动状态0-未开始，1-进行中，2-已结束\"},\"start_at\":{\"type\":\"string\",\"description\":\"活动开始时间\",\"mock\":{\"mock\":\"@datetime(\\\"yyyy/MM/dd HH:mm\\\")\"}}},\"required\":[\"id\",\"publisher\",\"is_sign\",\"scan_count\",\"title\",\"image\",\"collect_count\",\"state\",\"start_at\",\"is_join\"]}},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"信息\"}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
         "add_time": 1577434024,
-        "up_time": 1577686648,
+        "up_time": 1577931442,
         "__v": 0
       },
       {
@@ -1722,7 +1722,7 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"tel\":{\"type\":\"string\",\"mock\":{\"mock\":\"1838046@integer(1000,9999)\"},\"description\":\"电话\"},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@name\"},\"description\":\"姓名\"},\"email\":{\"type\":\"string\",\"mock\":{\"mock\":\"@email\"},\"description\":\"邮箱\"},\"company\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"公司\"},\"extra\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"备注\"},\"position\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"职位\"}},\"required\":[\"tel\",\"company\",\"email\",\"name\",\"position\"]}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"tel\":{\"type\":\"string\",\"mock\":{\"mock\":\"1838046@integer(1000,9999)\"},\"description\":\"电话\"},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@name\"},\"description\":\",10|姓名\"},\"email\":{\"type\":\"string\",\"mock\":{\"mock\":\"@email\"},\"description\":\"邮箱\"},\"company\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"1,10|公司\"},\"extra\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"备注\"},\"position\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"职位\"}},\"required\":[\"tel\",\"company\",\"email\",\"name\",\"position\"]}",
         "req_body_type": "json",
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"object\",\"properties\":{},\"description\":\"始终为null\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"data\",\"msg\"]}",
         "uid": 14,
@@ -1828,7 +1828,7 @@
       },
       {
         "query_path": {
-          "path": "/code",
+          "path": "/user/getCode",
           "params": []
         },
         "edit_uid": 0,
@@ -1843,17 +1843,17 @@
         "method": "GET",
         "catid": 875,
         "title": "获取验证码",
-        "path": "/code",
+        "path": "/user/getCode",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577435693,
-        "up_time": 1577438150,
+        "up_time": 1577931505,
         "req_query": [
           {
             "required": "1",
-            "_id": "5e05c26256a03f4354cd64d7",
+            "_id": "5e0d52f156a03f4354cd65af",
             "name": "tel",
             "desc": "手机号"
           }
@@ -1908,7 +1908,7 @@
       },
       {
         "query_path": {
-          "path": "/code-verify",
+          "path": "/user/verifyCode",
           "params": []
         },
         "edit_uid": 0,
@@ -1920,21 +1920,21 @@
         "index": 2,
         "tag": [],
         "_id": 805,
-        "method": "POST",
+        "method": "PUT",
         "catid": 875,
         "title": "验证手机",
-        "path": "/code-verify",
+        "path": "/user/verifyCode",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577435834,
-        "up_time": 1577438152,
+        "up_time": 1577931570,
         "req_query": [],
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05c30056a03f4354cd64d8",
+            "_id": "5e0d533256a03f4354cd65b0",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1949,7 +1949,7 @@
       },
       {
         "query_path": {
-          "path": "/file",
+          "path": "/user/uploadFile",
           "params": []
         },
         "edit_uid": 0,
@@ -1964,18 +1964,18 @@
         "method": "POST",
         "catid": 875,
         "title": "文件上传",
-        "path": "/file",
+        "path": "/user/uploadFile",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577435936,
-        "up_time": 1577438153,
+        "up_time": 1577931582,
         "req_query": [],
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05c37e56a03f4354cd64db",
+            "_id": "5e0d533e56a03f4354cd65b1",
             "name": "Content-Type",
             "value": "multipart/form-data"
           }
@@ -1983,7 +1983,7 @@
         "req_body_form": [
           {
             "required": "1",
-            "_id": "5e05c37e56a03f4354cd64dc",
+            "_id": "5e0d533e56a03f4354cd65b2",
             "name": "file",
             "type": "file",
             "desc": "文件"
@@ -1997,7 +1997,7 @@
       },
       {
         "query_path": {
-          "path": "/feedback",
+          "path": "/user/feedback",
           "params": []
         },
         "edit_uid": 0,
@@ -2012,18 +2012,18 @@
         "method": "POST",
         "catid": 875,
         "title": "反馈与帮助",
-        "path": "/feedback",
+        "path": "/user/feedback",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577436099,
-        "up_time": 1577438155,
+        "up_time": 1577931608,
         "req_query": [],
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05c41c56a03f4354cd64e0",
+            "_id": "5e0d535856a03f4354cd65b3",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -2038,7 +2038,7 @@
       },
       {
         "query_path": {
-          "path": "/privacy",
+          "path": "/user/privacy",
           "params": []
         },
         "edit_uid": 0,
@@ -2053,13 +2053,13 @@
         "method": "GET",
         "catid": 875,
         "title": "隐私政策",
-        "path": "/privacy",
+        "path": "/user/privacy",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577436233,
-        "up_time": 1577438157,
+        "up_time": 1577931618,
         "req_query": [],
         "req_headers": [],
         "req_body_form": [],
@@ -2070,7 +2070,7 @@
       },
       {
         "query_path": {
-          "path": "/agreement",
+          "path": "/user/agreement",
           "params": []
         },
         "edit_uid": 0,
@@ -2085,7 +2085,7 @@
         "method": "GET",
         "catid": 875,
         "title": "用户协议",
-        "path": "/agreement",
+        "path": "/user/agreement",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
@@ -2097,12 +2097,12 @@
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"code\":{\"type\":\"number\",\"mock\":{\"mock\":\"@pick([2000,4000])\"}},\"data\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"},\"description\":\"内容\"},\"msg\":{\"type\":\"string\",\"mock\":{\"mock\":\"@string\"}}},\"required\":[\"code\",\"msg\",\"data\"]}",
         "uid": 14,
         "add_time": 1577436288,
-        "up_time": 1577438159,
+        "up_time": 1577931630,
         "__v": 0
       },
       {
         "query_path": {
-          "path": "/user_info",
+          "path": "/user/updateInfo",
           "params": []
         },
         "edit_uid": 0,
@@ -2117,18 +2117,18 @@
         "method": "PUT",
         "catid": 875,
         "title": "信息更改",
-        "path": "/user_info",
+        "path": "/user/updateInfo",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577436630,
-        "up_time": 1577438161,
+        "up_time": 1577933009,
         "req_query": [],
         "req_headers": [
           {
             "required": "1",
-            "_id": "5e05c6de56a03f4354cd64f9",
+            "_id": "5e0d58d156a03f4354cd65b5",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -2143,7 +2143,7 @@
       },
       {
         "query_path": {
-          "path": "/user-info",
+          "path": "/user/info",
           "params": []
         },
         "edit_uid": 0,
@@ -2158,13 +2158,13 @@
         "method": "GET",
         "catid": 875,
         "title": "个人信息",
-        "path": "/user-info",
+        "path": "/user/info",
         "project_id": 71,
         "req_params": [],
         "res_body_type": "json",
         "uid": 14,
         "add_time": 1577436842,
-        "up_time": 1577438164,
+        "up_time": 1577932994,
         "req_query": [],
         "req_headers": [],
         "req_body_form": [],

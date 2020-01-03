@@ -43,7 +43,7 @@ type actionGroup struct {
 func (actGroupMap actGroupMap) String() []string {
 	routes := make([]string, 0)
 	for _, actGroup := range actGroupMap {
-		groupTpl := "%s//%s\n%sRoute::prefix('%s')->group(function(){\n%s\n%s})"
+		groupTpl := "%s//%s\n%sRoute::prefix('%s')->group(function(){\n%s\n%s});"
 		abStr := make([]string, 0)
 		for _, ab := range actGroup.Actions {
 			abStr = append(abStr, ab.String())
@@ -95,7 +95,9 @@ func (actBody actBody) String() string {
 	} else {
 		switch strings.ToUpper(actBody.Method.String()) {
 		case "POST":
-			actBody.ActionName = "store" + strcase.UpperCamelCase(actBody.ActionName)
+			if actBody.SetId == true {
+				actBody.ActionName = "store" + strcase.UpperCamelCase(actBody.ActionName)
+			}
 		case "PUT":
 			if actBody.SetId == true {
 				actBody.ActionName = "update" + strcase.UpperCamelCase(actBody.ActionName)
@@ -106,12 +108,16 @@ func (actBody actBody) String() string {
 			}
 		}
 	}
+	routeStr := strings.ReplaceAll(actBody.Path, "/"+actBody.ModuleName, "")
+	if routeStr == "" {
+		routeStr = "/"
+	}
 	tmp := fmt.Sprintf(routeTpl,
 		strings.Repeat(" ", actBody.Indent|8),
 		actBody.ActionTitle,
 		strings.Repeat(" ", actBody.Indent|8),
 		strings.ToLower(actBody.Method.String()),
-		actBody.Path,
+		routeStr,
 		fmt.Sprintf("%s@%s", strcase.UpperCamelCase(actBody.ModuleName), actBody.ActionName))
 	return tmp
 }
@@ -135,12 +141,7 @@ func (routesWriter *routesWriter) Group(routes []Route) actGroupMap {
 		body.ActionName = route.ActionName
 		body.ActionTitle = route.ActionTitle
 
-		moduleName := ""
-		if strings.Contains(body.ModuleName, "_") {
-			moduleName = strings.Split(body.ModuleName, "_")[0]
-		} else {
-			moduleName = body.ModuleName
-		}
+		moduleName := body.ModuleName
 		if _, exists := actGroupMap[moduleName]; exists {
 			actGroupMap[moduleName].Actions = append(actGroupMap[moduleName].Actions, body)
 		} else {

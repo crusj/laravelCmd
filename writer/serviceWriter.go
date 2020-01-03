@@ -35,7 +35,7 @@ func (serviceWriter serviceWriter) Between() *Between {
 	}
 }
 func (serviceWriter serviceWriter) Contents(routes []Route) [][]string {
-	funcTpl := "    //%s\n    public function %s(%s) :%s {\n        return %s;\n    }"
+	funcTpl := "    //%s\n    public function %s(%s) :%s {\n%s\n        return %s;\n    }"
 	hash := make(map[string][]string)
 	hashMap := make([]string, 0)
 	for _, route := range routes {
@@ -44,7 +44,11 @@ func (serviceWriter serviceWriter) Contents(routes []Route) [][]string {
 		if route.ActionName == "" {
 			switch strings.ToUpper(route.Method.String()) {
 			case "GET":
-				actionName = "index"
+				if route.SetId {
+					actionName = "show"
+				}else{
+					actionName = "index"
+				}
 			case "POST":
 				actionName = "store"
 			case "PUT":
@@ -87,6 +91,7 @@ func (serviceWriter serviceWriter) Contents(routes []Route) [][]string {
 			actionName,
 			idStr,
 			returnType,
+			queryParamToCode(route.QueryParams),
 			defaultReturnValue,
 		)
 		if _, exists := hash[route.ModuleName]; exists {
@@ -102,7 +107,61 @@ func (serviceWriter serviceWriter) Contents(routes []Route) [][]string {
 	}
 	return actions
 }
+func queryParamToCode(queryParams []*QueryParam) string {
 
+	var queryParamsStr []string
+	eightSpace := strings.Repeat(" ", 8)
+	tpl := eightSpace+"//%s\n" + eightSpace + "$%s = request()->get('%s', %s);"
+	for _, queryParam := range queryParams {
+		descEach := strings.Split(queryParam.Desc, "|")
+		//参数类型
+		paramType := ""
+		//参数默认值
+		paramDefaut := ""
+		//参数描述
+		paramDesc := ""
+		switch len(descEach) {
+		case 0:
+		case 1:
+			paramDesc = descEach[0]
+		case 2:
+			paramDesc = descEach[1]
+			paramType = strings.ToLower(descEach[0])
+		case 3:
+			paramDesc = descEach[2]
+			paramType = strings.ToLower(descEach[0])
+			paramDefaut = descEach[1]
+		default:
+			paramType = strings.ToLower(descEach[0])
+			paramDefaut = descEach[1]
+			paramDesc = strings.Join(descEach[2:], "")
+		}
+		if paramDefaut == "" {
+			if paramType == "" {
+				paramDefaut = "''"
+			} else {
+				switch paramType {
+				case "string":
+					paramDefaut = "''"
+				case "int":
+					paramDefaut = "0"
+				case "bool":
+					paramDefaut = "false"
+				default:
+					paramDefaut = "''"
+				}
+			}
+		}
+		tplStr := fmt.Sprintf(tpl,
+			paramDesc,
+			strcase.LowerCamelCase(queryParam.Name),
+			queryParam.Name,
+			paramDefaut,
+		)
+		queryParamsStr = append(queryParamsStr, tplStr)
+	}
+	return strings.Join(queryParamsStr, "\n")
+}
 func NewServiceWriter(dir, startFlag, EndFlag string) *serviceWriter {
 	return &serviceWriter{
 		Dir:       dir,

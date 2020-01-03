@@ -15,5 +15,17 @@ func TestRoutesWriter(t *testing.T) {
 func TestControllerWriter(t *testing.T) {
 	parser := NewRoutesParser("../api.json")
 	writer := NewControllerWriter("../app/Http/Controllers/", "//controller_start", "//controller_end")
+	if err := Writes(parser, writer); err != nil {
+		t.Fatal(err)
+	}
+}
+func TestRequestRuleWriter(t *testing.T) {
+	parser := NewRoutesParser("../api.json")
+	writer := NewRequestRuleWriter("../app/Http/Requests/", "//rule_start", "//rule_end")
+	Writes(parser, writer)
+}
+func TestRequestAttributeWriter(t *testing.T) {
+	parser := NewRoutesParser("../api.json")
+	writer := NewRequestAttributeWriter("../app/Http/Requests/", "//attribute_start", "//attribute_end")
 	Writes(parser, writer)
 }

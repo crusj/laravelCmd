@@ -70,7 +70,7 @@ func Writes(parser Parser, writers Writers) error {
 	for i, filePath := range writers.FilesPath(routes) {
 		file, err := myFile.NewFile(filePath)
 		if err != nil {
-			logger.Error("文件路径错误%s,将被忽略,%s", filePath, err)
+			logger.Warn("文件路径错误%s,将被忽略,%s", filePath, err)
 			continue
 		}
 		if contents[i] == nil {
@@ -80,12 +80,12 @@ func Writes(parser Parser, writers Writers) error {
 		between := writers.Between()
 		err = file.Scan([]myFile.AddTag{between.addStartTag, between.addEndTag}...)
 		if err != nil {
-			logger.Error("文件%s扫描错误,将被忽略,%s", filePath, err)
+			logger.Warn("文件%s扫描错误,将被忽略,%s", filePath, err)
 			continue
 		}
 		err = file.InsertBetween(between.startTag, between.endTag, contents[i])
 		if err != nil {
-			logger.Error("文件%插入错误,将被忽略,%s", filePath, err)
+			logger.Warn("文件%插入错误,将被忽略,%s", filePath, err)
 			continue
 		}
 		logger.Info("文件%s写入成功", filePath)

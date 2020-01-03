@@ -58,7 +58,11 @@ func (controllerWriter *controllerWriter) Contents(routes []Route) [][]string {
 		if route.ActionName == "" {
 			switch strings.ToUpper(route.Method.String()) {
 			case "GET":
-				actionName = "index"
+				if route.SetId {
+					actionName = "show"
+				}else{
+					actionName = "index"
+				}
 			case "POST":
 				actionName = "store"
 			case "PUT":
@@ -80,7 +84,7 @@ func (controllerWriter *controllerWriter) Contents(routes []Route) [][]string {
 		//id
 		idStr := ""
 		if route.SetId == true {
-			idStr = "int $id"
+			idStr = "$id"
 		}
 		//serviceFactory
 		serviceInstance := fmt.Sprintf("$service = ServiceFactory::%s();\n", strcase.LowerCamelCase(route.ModuleName))
@@ -105,7 +109,11 @@ func (controllerWriter *controllerWriter) Contents(routes []Route) [][]string {
 				tweleveSpace + "$this->success($%s);\n" +
 				eightSpace + "}\n"
 			if route.SetId {
-				ifStr = fmt.Sprintf(ifStr, resultName, "failObject", resultName)
+				if actionName == "show" {
+					ifStr = fmt.Sprintf(ifStr, resultName, "failObject", resultName)
+				}else{
+					ifStr = fmt.Sprintf(ifStr, resultName, "failArray", resultName)
+				}
 			} else {
 				ifStr = fmt.Sprintf(ifStr, resultName, "failArray", resultName)
 			}

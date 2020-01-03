@@ -28,6 +28,7 @@ var (
 	apiDocument   = apiRoute.Flag("config", "api document path").Default("api.json").String()
 	apiParser     = apiRoute.Flag("parser", "api parser").Default("yapi").String()
 
+	//服务
 	service         = app.Command("service", "analysis api document and write routes to every service file")
 	serviceDocument = service.Flag("config", "service document path").Default("api.json").String()
 	servicePath     = service.Flag("path", "service path").Default("app/Http/Services/").String()
@@ -35,21 +36,59 @@ var (
 	serviceEnd      = service.Flag("e", "service end flag").Default("//service_end").String()
 	serviceParser   = service.Flag("parser", "api parser").Default("yapi").String()
 
+	//控制器
 	controller         = app.Command("controller", "analysis api document and write routes to every controller file")
 	controllerDocument = controller.Flag("config", "controller document path").Default("api.json").String()
-	controllerPath     = controller.Flag("path", "controller path").Default("app/Http/Services/").String()
+	controllerPath     = controller.Flag("path", "controller path").Default("app/Http/Controllers/").String()
 	controllerStart    = controller.Flag("s", "controller start flag").Default("//controller_start").String()
 	controllerEnd      = controller.Flag("e", "controller end flag").Default("//controller_end").String()
 	controllerParser   = controller.Flag("parser", "api parser").Default("yapi").String()
+
+	//request
+	request          = app.Command("request", "analysis api document and write routes to every request file")
+	requestDocument  = request.Flag("config", "request document path").Default("api.json").String()
+	requestPath      = request.Flag("path", "request path").Default("app/Http/Requests/").String()
+	requestParser    = request.Flag("parser", "api parser").Default("yapi").String()
+	requestRule      = request.Command("rule", "write rules to request file")
+	requestRuleStart = requestRule.Flag("s", "request rule start flag").Default("//rule_start").String()
+	requestRuleEnd   = requestRule.Flag("e", "request rule end flag").Default("//rule_end").String()
+
+	requestAttribute      = request.Command("attribute", "write attribtue to request file")
+	requestAttributeStart = requestAttribute.Flag("s", "request attribute start flag").Default("//attribute_start").String()
+	requestAttributeEnd   = requestAttribute.Flag("e", "request attribute end flag").Default("//attribute_end").String()
 )
 
 func main() {
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	//写入规则属性
+	case requestAttribute.FullCommand():
+		if *requestParser == "yapi" {
+			requestAttributeWriter := writer.NewRequestAttributeWriter(*requestPath, *requestAttributeStart, *requestAttributeEnd)
+			routeParser := writer.NewRoutesParser(*requestDocument)
+			err := writer.Writes(routeParser, requestAttributeWriter)
+			if err != nil {
+				kingpin.Errorf("%s\n", err)
+			}
+		} else {
+			kingpin.Fatalf("不支持的文档解析器%s,当前仅支持yapi文档\n", *apiParser)
+		}
+	//写入规则
+	case requestRule.FullCommand():
+		if *requestParser == "yapi" {
+			requestRuleWriter := writer.NewRequestRuleWriter(*requestPath, *requestRuleStart, *requestRuleEnd)
+			routeParser := writer.NewRoutesParser(*requestDocument)
+			err := writer.Writes(routeParser, requestRuleWriter)
+			if err != nil {
+				kingpin.Errorf("%s\n", err)
+			}
+		} else {
+			kingpin.Fatalf("不支持的文档解析器%s,当前仅支持yapi文档\n", *apiParser)
+		}
 	//向controller写入方法
 	case controller.FullCommand():
 		if *controllerParser == "yapi" {
 			routeParser := writer.NewRoutesParser(*controllerDocument)
-			controllerWriter := writer.NewServiceWriter(*controllerPath, *controllerStart, *controllerEnd)
+			controllerWriter := writer.NewControllerWriter(*controllerPath, *controllerStart, *controllerEnd)
 			err := writer.Writes(routeParser, controllerWriter)
 			if err != nil {
 				kingpin.Errorf("%s\n", err)

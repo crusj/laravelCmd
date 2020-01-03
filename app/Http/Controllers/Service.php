@@ -6,30 +6,10 @@ use App\Http\Controllers\Base;
 class Service extends Base
 {
 //controller_start
-    //服务分类
-    public function index() {
-        $service = ServiceFactory::service();
-        $data = $service->index();
-        if(empty($data)) {
-            $this->failArray('暂无数据');
-        }else {
-            $this->success($data);
-        }
-    }
-    //所有服务
-    public function index() {
-        $service = ServiceFactory::service();
-        $data = $service->index();
-        if(empty($data)) {
-            $this->failArray('暂无数据');
-        }else {
-            $this->success($data);
-        }
-    }
     //服务详情
-    public function index(int $id) {
+    public function show($id) {
         $service = ServiceFactory::service();
-        $data = $service->index(int $id);
+        $data = $service->show($id);
         if(empty($data)) {
             $this->failObject('暂无数据');
         }else {
@@ -37,19 +17,19 @@ class Service extends Base
         }
     }
     //服务评论
-    public function comment(int $id) {
+    public function comments($id) {
         $service = ServiceFactory::service();
-        $data = $service->comment(int $id);
+        $data = $service->comments($id);
         if(empty($data)) {
-            $this->failObject('暂无数据');
+            $this->failArray('暂无数据');
         }else {
             $this->success($data);
         }
     }
     //评论服务
-    public function storeComment(int $id) {
+    public function storeComment($id) {
         $service = ServiceFactory::service();
-        $id = $service->storeComment(int $id);
+        $id = $service->storeComment($id);
         if($id <= 0) {
             $this->failObject($service->getErrorMsg());
         }else {
@@ -57,9 +37,9 @@ class Service extends Base
         }
     }
     //预约咨询
-    public function storeOrder(int $id) {
+    public function storeOrder($id) {
         $service = ServiceFactory::service();
-        $id = $service->storeOrder(int $id);
+        $id = $service->storeOrder($id);
         if($id <= 0) {
             $this->failObject($service->getErrorMsg());
         }else {
@@ -67,9 +47,9 @@ class Service extends Base
         }
     }
     //收藏
-    public function storeCollect(int $id) {
+    public function storeCollect($id) {
         $service = ServiceFactory::service();
-        $i = $service->storeCollect(int $id);
+        $id = $service->storeCollect($id);
         if($id <= 0) {
             $this->failObject($service->getErrorMsg());
         }else {

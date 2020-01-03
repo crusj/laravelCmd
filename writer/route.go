@@ -29,8 +29,11 @@ type RouteRequest struct {
 	Path string
 	//请求方法
 	Method Method
+
 	//请求参数
-	Params map[string]interface{}
+	QueryParams []*QueryParam
+	//存取参数
+	RequestParam []*RequestParam
 
 	//模块名
 	ModuleName,
@@ -52,4 +55,22 @@ type RouteResponse struct {
 type Route struct {
 	RouteRequest
 	RouteResponse
+}
+
+//查询参数
+type QueryParam struct {
+	Name     string
+	Required bool
+	//类型
+	Type string
+	//描述
+	Desc string
+}
+
+//存取参数
+type RequestParam struct {
+	Name     string
+	Type     string
+	Desc     string
+	Required bool
 }

@@ -3,9 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/alexeyco/simpletable"
 	myFile "github.com/crusj/file"
 	"github.com/crusj/logger"
+	"github.com/olekukonko/tablewriter"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -61,28 +61,57 @@ func NewLaravelAdmin(config, routePath, controller, startFlag, endFlag string) (
 
 }
 func (laravelAdmin *laravelAdmin) List() {
-	table := simpletable.New()
-	table.Header = &simpletable.Header{
-		Cells: []*simpletable.Cell{
-			{Align: simpletable.AlignLeft, Text: "number"},
-			{Align: simpletable.AlignLeft, Text: "module"},
-			{Align: simpletable.AlignLeft, Text: "title"},
-			{Align: simpletable.AlignLeft, Text: "register"},
-		},
-	}
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{
+		"序号",
+		"模块",
+		"标题",
+		"是否注册",
+	})
 	for i, item := range laravelAdmin.config {
 		var exists b = true
+		var row []string
 		exists = laravelAdmin.adminRouteIsRegister(item.Name)
-		r := []*simpletable.Cell{
-			{Align: simpletable.AlignLeft, Text: strconv.Itoa(i + 1)},
-			{Align: simpletable.AlignLeft, Text: item.Name},
-			{Align: simpletable.AlignLeft, Text: item.Title},
-			{Align: simpletable.AlignLeft, Text: exists.String()},
+		number := strconv.Itoa(i + 1)
+		if i+1 < 10 {
+			number = "0" + strconv.Itoa(i+1)
 		}
-		table.Body.Cells = append(table.Body.Cells, r)
+		row = append(row, number, item.Name, item.Title, exists.String())
+		if !exists {
+			table.Rich(row, []tablewriter.Colors{
+				tablewriter.Colors{
+					tablewriter.Normal,
+				},
+				tablewriter.Colors{
+					tablewriter.Normal,
+				},
+				tablewriter.Colors{
+					tablewriter.Normal,
+				},
+				tablewriter.Colors{
+					tablewriter.Normal,
+					tablewriter.FgGreenColor,
+				},
+			})
+		} else {
+			table.Rich(row, []tablewriter.Colors{
+				tablewriter.Colors{
+					tablewriter.Normal,
+				},
+				tablewriter.Colors{
+					tablewriter.Normal,
+				},
+				tablewriter.Colors{
+					tablewriter.Normal,
+				},
+				tablewriter.Colors{
+					tablewriter.Normal,
+					tablewriter.FgRedColor,
+				},
+			})
+		}
 	}
-	table.SetStyle(simpletable.StyleRounded)
-	fmt.Println(table.String())
+	table.Render()
 }
 
 //是否注册
